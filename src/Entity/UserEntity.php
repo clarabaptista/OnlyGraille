@@ -55,5 +55,41 @@ class UserEntity
         return $this;
     }
 
-    public function 
+    public function getPassword (): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword (string $password): self
+    {
+        $this->password = $password;
+        return $this;
+    }
+
+    public function getEmail (): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail (string $email) : self
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    // return Collection<int, User_Entity>
+
+    public function getFollowers(): Collection
+    {
+        return $this->followers;
+    }
+
+    // return Collection<int, User_Entity>
+    
+
+    public function getFollowing(): Collection
+    {
+        return $this->following;
+    }
+    
 }
