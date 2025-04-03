@@ -32,9 +32,12 @@ class UserEntity
     #[ORM\ManyToMany(targetEntity:'App\Entity\UserEntity', mappedBy:'followers')]
     private $following;
 
+    public function __construct()
+    {
+        $this->followers = new ArrayCollection();
+        $this->following = new ArrayCollection();
+    }
     
-    
-
     public function getId(): ?int
     {
         return $this->id;
@@ -51,4 +54,6 @@ class UserEntity
 
         return $this;
     }
+
+    public function 
 }
