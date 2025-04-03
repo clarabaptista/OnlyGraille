@@ -77,19 +77,25 @@ class UserEntity
         return $this;
     }
 
-    // return Collection<int, User_Entity>
-
+    /**
+     * @return Collection<int, UserEntity>
+     */
     public function getFollowers(): Collection
     {
         return $this->followers;
     }
 
-    // return Collection<int, User_Entity>
-    
-
+    /**
+     * @return Collection<int, UserEntity>
+     */
     public function getFollowing(): Collection
     {
         return $this->following;
     }
-    
+
 }
+
+ 
+
+
+
