@@ -17,10 +17,10 @@ class LikeEntity
     private ?string $likes = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $posts = null;
+    private PostEntity $post;
 
     #[ORM\Column(length: 255)]
-    private ?string $users = null;
+    private UserEntity $users;
 
     public function getId(): ?int
     {
