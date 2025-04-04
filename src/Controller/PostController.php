@@ -19,4 +19,13 @@ final class PostController extends AbstractController{
             'post' => $posts
         ]);
     }
+
+    #[Route('/test-recent-posts', name: 'test_recent_posts')]
+    public function testRecentPosts(PostEntityRepository $postRepository): Response
+    {
+        $posts = $postRepository->findMostRecentPosts();
+    
+        dd($posts); // Dump & Die pour afficher le résultat
+    }
+
 }

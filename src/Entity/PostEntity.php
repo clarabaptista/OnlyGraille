@@ -18,14 +18,14 @@ class PostEntity
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $caption = null;
 
-    #[ORM\Column(type: 'DateTime')]
+    #[ORM\Column(type: 'datetime')]
     private \DateTimeInterface $date;
 
     #[ORM\Column(length: 255)]
     private string $image;
 
     #[ORM\ManyToOne(targetEntity: UserEntity::class, inversedBy: 'posts')]
-    #[ORM\JoinColumn(nullable: false)] 
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
     private UserEntity $user;
 
 
