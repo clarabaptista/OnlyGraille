@@ -41,7 +41,7 @@ class PostEntityRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-   public function findMostRecentPosts($post): ?PostEntity
+   public function findMostRecentPosts(): array
    {
         return $this->createQueryBuilder(alias: 'p')
             ->addOrderBy('p.date','DESC') // les postes du plus récent au moins récent
@@ -51,7 +51,7 @@ class PostEntityRepository extends ServiceEntityRepository
             ;
    }
 
-   public function findMostLikedPosts($post): ?PostEntity
+   public function findMostLikedPosts(): array
    {
         return $this->createQueryBuilder(alias: 'p')
             ->addOrderBy(sort: 'p.likes', order: 'DESC')
@@ -61,7 +61,7 @@ class PostEntityRepository extends ServiceEntityRepository
             ;
    }
 
-   public function findPostByUserId($user): ?PostEntity
+   public function findPostByUserId($user): ?PostEntity // ou array ?
    {
         return $this->createQueryBuilder(alias: 'p')
             ->andWhere('p.user = :user')
