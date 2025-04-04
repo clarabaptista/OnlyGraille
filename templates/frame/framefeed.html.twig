@@ -1,0 +1,159 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<head>
+</head>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap');
+
+    body {
+        background-color: #000;
+        color: #fff;
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .sidebar {
+        width: 220px;
+        background: #111;
+        height: 100vh;
+        position: fixed;
+        padding: 20px;
+    }
+
+    .sidebar h1 {
+        font-family: 'Bebas Neue', sans-serif;
+        color: #e76e3c;
+        font-size: 46px;
+        text-align: center;
+    }
+
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+        margin-top: 90px;
+    }
+
+    .sidebar ul li {
+        margin: 15px 0;
+    }
+
+    .sidebar ul li a {
+        text-decoration: none;
+        color: white;
+        font-size: 16px;
+        font-weight: 400;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+        transition: background 0.3s;
+    }
+
+    .sidebar ul li a:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+    }
+
+    .main-content {
+        margin-left: 240px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .search-bar {
+        width: 50%;
+        padding: 12px;
+        border-radius: 20px;
+        border: none;
+        margin-bottom: 20px;
+        background: #222;
+        color: white;
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .post {
+        background: #222;
+        padding: 15px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .post-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .profile-pic {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        border: 2px solid #e76e3c;
+    }
+
+    .post-image {
+        width: 100%;
+        border-radius: 10px;
+        margin-top: 10px;
+    }
+
+    .like-button {
+        cursor: pointer;
+        color: red;
+        font-size: 18px;
+        margin-top: 10px;
+        display: inline-block;
+        transition: transform 0.2s;
+    }
+
+    .like-button:hover {
+        transform: scale(1.1);
+    }
+</style>
+
+<div class="container">
+    <div class="sidebar">
+        <h1>
+            <span style="color: white;">O</span><span style="color: #e76e3c;">G</span>
+        </h1>
+        <nav>
+            <ul>
+                <li><a href="#">Accueil</a></li>
+                <li><a href="#">Tendances</a></li>
+                <li><a href="#">Messages</a></li>
+                <li><a href="#">Créer</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <input type="text" placeholder="Recherche" class="search-bar">
+
+{% for frame in frames %}
+    <div class="post">
+        <div class="post-header">
+            <!-- Photo de profil de l'utilisateur -->
+            <img class="profile-pic" 
+                 src="{{ frame.userEntity.profilePicture is not empty ? asset('uploads/profile_pictures/' ~ frame.userEntity.profilePicture) : 'default-profile.png' }}" 
+                 alt="Photo de profil">
+            <p>{{ frame.userEntity.username }}</p>
+        </div>
+        <img class="post-image" src="{{ frame.image }}" alt="Image du post">
+        <p>{{ frame.description }}</p>
+        <a href="{{ path('frame_like', {id: frame.id}) }}" class="like-button">❤️ {{ frame.likes }}</a>
+    </div>
+{% endfor %}
+
+    </div>
+</div>
+{% endblock %}
