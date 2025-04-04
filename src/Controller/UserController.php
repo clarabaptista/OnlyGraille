@@ -2,14 +2,16 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\ORM\EntityManagerInterface;
-use App\Service\UserPasswordHashing;
+use App\Entity\UserEntity;
 use App\Form\RegistrationFormType;
-use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 final class UserController extends AbstractController {
     
@@ -25,7 +27,7 @@ final class UserController extends AbstractController {
     public function register(Request $request, UserPasswordHashing $passwordHashing, EntityManagerInterface $em): Response {
         $user = new User();
         $inscription = $this->createForm(RegistrationFormType::class, $user);
-        $inscription->handleRequest($request);  // Correction ici
+        $inscription->handleRequest($request);
        
         if ($inscription->isSubmitted() && $inscription->isValid()) { 
             $hashedPassword = $passwordHashing->hashPassword($user, $inscription->get('motDePasse')->getData());
@@ -50,6 +52,20 @@ final class UserController extends AbstractController {
             'error' => $error,
         ]);
     }
+
+    // Deconnexion 
+    #[Route('/logout', name: 'app_logout', methods:['GET'])]
+    public function logout(): void
+    {
+
+    }
    
+    // Affichage profil utilisateur
+    #[Route('/user{id}', name: 'user_profile', methods: ['GET'])]
+    public function userProfileCheck(UserEntity $user): Response {
+        return $this->render('user/profile.html.twig', [
+            'user' => $user,
+        ]);
+    }
 }
 
