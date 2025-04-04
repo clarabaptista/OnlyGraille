@@ -36,5 +36,21 @@ class LikeController extends AbstractController{
         if (!$post) {
             return $this->json(['error' => 'Post introuvable'], 404);
         }
+
+        $likeRepository = $em->getRepository(LikeEntity::class);
+        $existingLike = $likeRepository->findExistingLike($post, $user);
+
+        if ($existingLike) {
+            return $this->json(['error' => 'Vous avez déjà liké ce post'], 400);
+        }
+
+        $like = new LikeEntity();
+        $like = setPost($post);
+        $like = setUser($user);
+
+        $em->persist($like);
+        $em->flush();
+
+        return $this->json(['message' => 'Post liké !'], 200);
     }
 }

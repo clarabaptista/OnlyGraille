@@ -16,6 +16,25 @@ class LikeEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, LikeEntity::class);
     }
 
+    /**
+     * @param PostEntity $post
+     * @param UserEntity $user
+     * @return LikeEntity|null
+     */
+
+     public function findExistingLike(PostEntity $post, UserEntity $user): ?LikeEntity 
+     {
+        return $this->createQueryBuilder('l')
+            ->andWhere('l.post= :post')
+            ->andWhere('l.user= :user')
+            ->setParameter('post', $post)
+            ->setParameter('user',$user)
+            ->getQuery()
+            ->getOneOrNullResult();
+     }
+}
+
+
 //    /**
 //     * @return LikeEntity[] Returns an array of LikeEntity objects
 //     */
@@ -40,4 +59,4 @@ class LikeEntityRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-}
+
