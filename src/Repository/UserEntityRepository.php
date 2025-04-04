@@ -6,6 +6,7 @@ use App\Entity\UserEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+
 /**
  * @extends ServiceEntityRepository<UserEntity>
  */
@@ -16,6 +17,20 @@ class UserEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, UserEntity::class);
     }
 
+    // Trouver un utilisteurs avec son username
+/**
+ * @param string $username
+ * @return UserEntity|null
+ */
+
+ public function findByUsername(string $username): ?UserEntity
+ {
+    return $this->createQueryBuilder('u')
+        ->andWhere('u.username= :username')
+        ->setParameter('username', $username)
+        ->getQuery()
+        ->getOneOrNullResult();
+ }
 //    /**
 //     * @return UserEntity[] Returns an array of UserEntity objects
 //     */
@@ -41,3 +56,4 @@ class UserEntityRepository extends ServiceEntityRepository
 //        ;
 //    }
 }
+
