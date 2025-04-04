@@ -48,6 +48,6 @@ final class UserController extends AbstractController {
             $em->flush();
             return $this->json(['message' => 'Vous ne suiuvez plus cet utilisateur'], 400);
         }
+ 
     }
-
 }
