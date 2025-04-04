@@ -25,18 +25,6 @@ class UserEntity
     #[ORM\Column(type:'string', length: 255, nullable: true)]
     private ?email $email = null;
 
-    #[ORM\ManyToMany(targetEntity:'App\Entity\UserEntity', inversedBy:'following')]
-    #[ORM\JoinTable(name:'followers')]
-    private $followers ;
-
-    #[ORM\ManyToMany(targetEntity:'App\Entity\UserEntity', mappedBy:'followers')]
-    private $following;
-
-    public function __construct()
-    {
-        $this->followers = new ArrayCollection();
-        $this->following = new ArrayCollection();
-    }
     
     public function getId(): ?int
     {
@@ -75,22 +63,6 @@ class UserEntity
     {
         $this->email = $email;
         return $this;
-    }
-
-    /**
-     * @return Collection<int, UserEntity>
-     */
-    public function getFollowers(): Collection
-    {
-        return $this->followers;
-    }
-
-    /**
-     * @return Collection<int, UserEntity>
-     */
-    public function getFollowing(): Collection
-    {
-        return $this->following;
     }
 
 }

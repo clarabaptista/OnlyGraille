@@ -50,35 +50,6 @@ final class UserController extends AbstractController {
             'error' => $error,
         ]);
     }
-
-    // Follow
-    #[Route('/user/{id}/follow', name: 'user_follow', methods: [POST])]
-    public function follow(User $user, EntityManagerInterface $em): Response
-    {
-        $userConnecté = $this->getUser();
-        if (!$userConnecté) {
-            return $this->json(['error' => 'Vous devez être connecté'], 401);
-        }
-        if ($user !== $userConnecté) {
-            $user->addFollower($userConnecté);
-            $em->flush();
-            return $this->json(['message' => 'Utilisateurs suiuvi !'], 400);
-        }
-    }
-
-    // Unfollow
-    #[Route('/user/{id}/unfollow', name: 'user_follow', methods: [POST])]
-    public function unfollow(User $user, EntityManagerInterface $em): Response
-    {
-        $userConnecté = $this->getUser();
-        if (!$userConnecté) {
-            return $this->json(['error' => 'Vous devez être connecté'], 401);
-        }
-        if ($user->getFollower()->contains($userConnecté)) {
-            $user->removeFollower($userConnecté);
-            $em->flush();
-            return $this->json(['message' => 'Vous ne suiuvez plus cet utilisateur'], 400);
-        }
-    }
+   
 }
 
