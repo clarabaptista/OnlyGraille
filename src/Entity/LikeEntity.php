@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\LikeEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\PostEntity;
+use App\Entity\UserEntity;
 
 #[ORM\Entity(repositoryClass: LikeEntityRepository::class)]
 class LikeEntity
@@ -11,54 +13,41 @@ class LikeEntity
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private int $id;
 
-    #[ORM\Column(length: 255)]
-    private ?string $likes = null;
-
-    #[ORM\Column(length: 255)]
+    #[ORM\ManyToOne(targetEntity: PostEntity::class, inversedBy: 'likes')]
+    #[ORM\JoinColumn(nullable: false)] 
     private PostEntity $post;
 
-    #[ORM\Column(length: 255)]
-    private UserEntity $users;
+    #[ORM\ManyToOne(targetEntity: UserEntity::class, inversedBy: 'likes')]
+    #[ORM\JoinColumn(nullable: false)] 
+    private UserEntity $user;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getLikes(): ?string
+    public function getPost(): PostEntity
     {
-        return $this->likes;
+        return $this->post;
     }
 
-    public function setLikes(string $likes): static
+    public function setPost(PostEntity $post): static
     {
-        $this->likes = $likes;
+        $this->post = $post;
 
         return $this;
     }
 
-    public function getPosts(): ?string
+    public function getUser(): UserEntity
     {
-        return $this->posts;
+        return $this->user;
     }
 
-    public function setPosts(string $posts): static
+    public function setUser(UserEntity $user): static
     {
-        $this->posts = $posts;
-
-        return $this;
-    }
-
-    public function getUsers(): ?string
-    {
-        return $this->users;
-    }
-
-    public function setUsers(string $users): static
-    {
-        $this->users = $users;
+        $this->user = $user;
 
         return $this;
     }
