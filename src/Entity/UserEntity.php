@@ -23,7 +23,7 @@ class UserEntity
     private ?string $password = null;
 
     #[ORM\Column(type:'string', length: 255, nullable: true)]
-    private ?email $email = null;
+    private ?string $email = null;
 
     
     public function getId(): ?int

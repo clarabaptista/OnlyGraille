@@ -23,7 +23,7 @@ class UserEntityRepository extends ServiceEntityRepository
  * @return UserEntity|null
  */
 
- public function findByUsername(string $username): ?UserEntity
+    public function findByUsername(string $username): ?UserEntity
  {
     return $this->createQueryBuilder('u')
         ->andWhere('u.username= :username')
